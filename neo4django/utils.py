@@ -1,11 +1,11 @@
 import itertools
+import importlib
 
 from abc import ABCMeta
 from collections import defaultdict
 from threading import local
 
 from django.core.exceptions import ImproperlyConfigured
-from django.utils.importlib import import_module
 
 from neo4django.decorators import transactional
 from neo4django.neo4jclient import EnhancedGraphDatabase
@@ -428,7 +428,7 @@ def load_client(client_path):
     client_modname, client_classname = client_path.rsplit('.', 1)
 
     try:
-        client_mod = import_module(client_modname)
+        client_mod = importlib.import_module(client_modname)
     except ImportError:
         raise ImproperlyConfigured("Could not import %s as a client" % client_path)
 
